@@ -1,0 +1,54 @@
+docker run <flag> <image> <commands>
+-i = interactive
+-t = terminal
+-d = detach
+-p host:container = port mapping(s)
+-u <username> = linux user
+-v host_loc:container:loc = persistent volume mapping
+--name <name> = name
+-e <property=value> = Environment variable(s)
+-- links <host_service_name:container_service_name>
+docker inspect <container>
+docker logs <container>
+
+
+
+docker start <container>
+docker stop <container>
+docker rm <container>
+docker rmi <image>
+docker attach <container>
+docker ps (-a)
+
+docker build <Dockerfile_location> -t <tag:version>
+docker push <username/imagename>
+
+
+docker login
+
+
+docker-compose:
+docker run -d --name wordpress --link db -p 8085:80 wordpress
+docker run -d --name db -e POSTGRES_PASSWORD=mysecretpassword postgres
+
+version: "2.2"
+services:
+    db:
+        image: postgres
+        environment:
+            - POSTGRES_PASSWORD=mysecretpassword
+    wordpress:
+        image: wordpress
+        links:
+            - "db"
+        depends_on:
+            - db
+        ports:
+            - 8085:80
+
+			
+docker -H=remote-docker-engine:2375
+docker -H=<host/ip:port> <commands> 
+
+
+
