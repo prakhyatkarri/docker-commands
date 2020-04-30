@@ -52,3 +52,50 @@ docker -H=<host/ip:port> <commands>
 
 
 
+docker run --cpu=.5 ubuntu # Take only max of 50% CPU
+docker run --memory=100m ubuntu # Take only max 100m memory
+
+
+
+
+docker storage:
+/var/lib/docker
+	aufs
+	containers
+	volumes
+	image
+	
+	
+
+docker volume create <host_volume> # Creates a volume in /var/lib/docker/volumes/<host_volume>
+docker run -v <host_volume>:<container_folder> <image>
+Example:
+docker run -v /data/mysql:/var/lib/mysql mysql
+docker run --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
+
+
+docker network:
+docker run <image> --network=none|<host> (empty=bridge)
+bridge:
+172.17.xx.xx IP range (internal container network)
+docker network create --driver bridge --subnet <xxx.xxx.xxx.xxx/xx>
+docker network create --driver bridge --subnet 182.18.0.1/24 --gateway 182.18.0.1 wp-mysql-network
+docker network ls
+docker DNS - 127.0.0.11
+
+docker inspect <network_id>
+
+
+docker registry:
+docker run -d -p 5000:5000 --name registry registry:2 # Run local priate registry
+docker image tag <myimage> localhost:5000/<myimage>
+docker push/pull localhost:5000/<myimage>
+
+
+
+
+docker service create --replicas=100 <image>
+
+
+docker swarm init # start manager on manager host machine
+docker swarm join --token <token> # nodes join the swarm cluster
